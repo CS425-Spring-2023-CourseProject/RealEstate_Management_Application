@@ -1,7 +1,12 @@
 from django.urls import path
 from . import views
+from .views import signup
 
 urlpatterns = [
+    path('signup_process/', signup, name='signup_process'),
+    
+    path("login_process", views.login_process, name="login_process"),
+    
     path("users/", views.UserList.as_view(), name="user_list"),
     path("users/<str:pk>/", views.UserDetail.as_view(), name="user_detail"),
 

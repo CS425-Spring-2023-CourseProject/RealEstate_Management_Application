@@ -1,7 +1,42 @@
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from rest_framework import generics
 from .models import User, Address, Neighborhood, Agent, PerspectiveRenter, RewardProgram, CreditCard, Property, Price, Booking, House, Apartment, CommercialBuilding, VacationHome, Land
 from .serializers import UserSerializer, AddressSerializer, NeighborhoodSerializer, AgentSerializer, PerspectiveRenterSerializer, RewardProgramSerializer, CreditCardSerializer, PropertySerializer, PriceSerializer, BookingSerializer, HouseSerializer, ApartmentSerializer, CommercialBuildingSerializer, VacationHomeSerializer, LandSerializer
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login,authenticate
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Log the user in.
+            login(request, user)
+            return HttpResponseRedirect('/dashboard') # Or any other success URL
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
+
+def login_process(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            login(request, user)
+            response_data = {'success': True, 'message': 'Logged in successfully.'}
+        else:
+            response_data = {'success': False, 'message': 'Invalid email or password.'}
+        
+        return JsonResponse(response_data)
+    else:
+        return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()

@@ -12,10 +12,10 @@
 <body>
   <header>
     <nav>
-      <a href="index.html" class="logo">RealEstate</a>
+      <a href="{% url 'index' %}" class="logo">RealEstate</a>
       <ul>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="logout.html">Log Out</a></li>
+        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        <li><a href="{% url 'logout' %}">Log Out</a></li>
       </ul>
     </nav>
   </header>
@@ -54,6 +54,5 @@
   <footer>
     <p>&copy; 2023 RealEstate. All Rights Reserved.</p>
   </footer>
-  <script src="scripts.js"></script>
 </body>
 </html>

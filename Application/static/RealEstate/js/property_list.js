@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let properties;
   
     async function fetchProperties() {
-      const response = await fetch("property_list/");
+      const response = await fetch("/property_list/");
       properties = await response.json();
       displayProperties(properties);
     }

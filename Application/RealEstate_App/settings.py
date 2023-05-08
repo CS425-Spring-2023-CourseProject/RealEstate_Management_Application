@@ -25,10 +25,10 @@ SECRET_KEY = "django-insecure-#4jwu3d#c8$=()d=p$^35k@g_xs!awr+zl(2g@ft9vgi#+u@4^
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+CORS_ORIGIN_ALLOW_ALL = True 
 
 ALLOWED_HOSTS = []
 
-CORS_ORIGIN_ALLOW_ALL = True 
 
 # Application definition
 
@@ -61,7 +61,7 @@ ROOT_URLCONF = "RealEstate_App.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates/RealEstate')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

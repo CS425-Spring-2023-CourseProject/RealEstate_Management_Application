@@ -1,5 +1,5 @@
 async function fetchBookings() {
-    const response = await fetch('http://127.0.0.1:8000/api/bookings/');
+    const response = await fetch('/api/bookings/');
     const data = await response.json();
   
     if (response.ok) {
@@ -15,7 +15,7 @@ async function fetchBookings() {
   
   // Add this function to handle cancel booking
   async function cancelBooking(bookingId) {
-    const response = await fetch(`/bookings/${bookingId}/`, {
+    const response = await fetch(`/api/bookings/${bookingId}/`, {
       method: 'DELETE',
       headers: {
         // Add your Django CSRF token here

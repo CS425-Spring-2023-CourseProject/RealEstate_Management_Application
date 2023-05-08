@@ -13,10 +13,10 @@
   <header>
     <nav>
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="property_search.html">Search Properties</a></li>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="logout.html">Logout</a></li>
+        <li><a href="{% url 'index' %}" >Home</a></li>
+        <li><a href="{% url 'property_search' %}" >Search Properties</a></li>
+        <li><a href="{% url 'dashboard' %}" >Dashboard</a></li>
+        <li><a href="{% url 'logout' %}" >Logout</a></li>
       </ul>
     </nav>
   </header>
@@ -26,7 +26,26 @@
 
       <!-- Personal Details -->
       <h2>Personal Details</h2>
-      <form method="POST">
+      <!-- Addresses -->
+      <h2>Addresses</h2>
+      <form id="address-form" method="POST" action="{% url 'add_address' %}">
+        {% csrf_token %}
+        <label for="street">Street:</label>
+        <input type="text" name="street" id="street" required>
+
+        <label for="city">City:</label>
+        <input type="text" name="city" id="city" required>
+
+        <label for="state">State:</label>
+        <input type="text" name="state" id="state" required>
+
+        <label for="zip_code">Zip Code:</label>
+        <input type="text" name="zip_code" id="zip_code" required>
+
+        <button type="submit" class="btn">Add Address</button>
+      </form>
+
+      <form id="personal-details-form" method="POST">
         {% csrf_token %}
         {% for field in personal_details_form %}
           <div class="form-group">
@@ -44,7 +63,7 @@
 
       <!-- Preferred Neighborhoods -->
       <h2>Preferred Neighborhoods</h2>
-      <form method="POST">
+      <form id="preferred-neighborhoods-form" method="POST">
         {% csrf_token %}
         {% for field in preferred_neighborhood_form %}
           <div class="form-group">

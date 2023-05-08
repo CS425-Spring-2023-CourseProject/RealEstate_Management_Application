@@ -22,6 +22,7 @@ from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from .forms import AddPropertyForm
 from .forms import AddPropertyForm, EditPropertyForm, BookPropertyForm
+from django.contrib import messages
 
 def edit_property(request, property_id):
     property = get_object_or_404(Property, id=property_id)
@@ -69,8 +70,6 @@ def index(request):
 def dashboard(request):
     return render(request, 'RealEstate/dashboard.html')
 
-def property_details(request):
-    return render(request, 'RealEstate/property_details.html')
 
 # payment info view
 def payment_info(request):
@@ -81,14 +80,6 @@ def profile(request):
 # manage bookings view
 def manage_bookings(request):
     return render(request, 'RealEstate/manage_bookings.html')
-
-# property list view
-def property_list(request):
-    return render(request, 'RealEstate/property_list.html')
-
-# property search view
-def property_search(request):
-    return render(request, 'RealEstate/property_search.html')
 
 # login view
 def login(request):
@@ -102,27 +93,11 @@ def logout(request):
 def booking(request):
     return render(request, 'RealEstate/booking.html')
 
-def signup(request):
-    return render(request, 'RealEstate/signup.html')
 
 def search_properties(request):
     query = request.GET.get('search', '')
     properties = Property.objects.filter(location__icontains=query) | Property.objects.filter(property_type__icontains=query)
     return render(request, 'index.html', {'properties': properties})
-
-def add_property(request):
-    # Handle form submission to add a property
-    pass
-
-
-def edit_property(request, property_id):
-    # Handle form submission to edit a property
-    pass
-
-
-def delete_property(request, property_id):
-    # Handle form submission to delete a property
-    pass
 
 def book_property(request):
     # Handle form submission to book a property
@@ -196,25 +171,29 @@ def login_process(request):
         return JsonResponse(response_data)
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method.'})
-    
-def dashboard(request):
-    return render(request, "dashboard.html", {"user": request.user})
 
 def property_search(request):
-    if request.method == 'POST':
-        # Parse search parameters from the request
-        search_params = json.loads(request.body)
+    if request.method == 'GET':
+        return render(request, 'property_search.html')
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        location = data.get("location")
+        date = data.get("date")
+        property_type = data.get("property_type")
+        price_range = data.get("price_range")
 
-        # Perform the search using your models and the search parameters
-        # This is just an example, you need to implement the search logic based on your models
-        properties = Property.objects.filter(location=search_params['location'])
+        properties = Property.objects.filter(
+            address__icontains=location,
+            date_available=date,
+            property_type=property_type,
+            price__lte=price_range
+        )
 
-        # Serialize the properties to JSON and return them in the response
-        properties_json = serializers.serialize('json', properties)
+        properties_json = [{"fields": property.__dict__} for property in properties]
         return JsonResponse(properties_json, safe=False)
     else:
-        return JsonResponse({"error": "Invalid request method"}, status=405)
-    
+        return JsonResponse({"error": "Invalid request method"}, status=400)
+
 class PropertySearch(View):
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
@@ -296,21 +275,33 @@ class ManageBookingsView(View):
         return JsonResponse({"error": "User not authenticated"}, status=401)
     
 def api_bookings(request):
-    bookings = []  # Fetch bookings for the user (renter/agent) from your database
+    user = request.user
+    if user.is_authenticated:
+        # Check if the user is an agent
+        is_agent = user.groups.filter(name='Agents').exists()
 
-    # Format bookings data as a list of dictionaries
-    formatted_bookings = [
-        {
-            'id': booking.id,
-            'property': booking.property.name,
-            'rental_period': f'{booking.start_date} - {booking.end_date}',
-            'total_cost': booking.total_cost,
-            'payment_method': booking.payment_method.name,
-        }
-        for booking in bookings
-    ]
+        if is_agent:
+            # Fetch bookings for the agent (properties managed by the agent)
+            bookings = Booking.objects.filter(property__agent=user)
+        else:
+            # Fetch bookings for the renter
+            bookings = Booking.objects.filter(renter=user)
 
-    return JsonResponse({'bookings': formatted_bookings})
+        # Format bookings data as a list of dictionaries
+        formatted_bookings = [
+            {
+                'id': booking.id,
+                'property': booking.property.name,
+                'rental_period': f'{booking.start_date} - {booking.end_date}',
+                'total_cost': booking.total_cost,
+                'payment_method': booking.payment_method.name,
+            }
+            for booking in bookings
+        ]
+
+        return JsonResponse({'bookings': formatted_bookings})
+    else:
+        return JsonResponse({'error': 'User not authenticated'}, status=401)
 
 class UpdatePersonalDetailsView(generics.UpdateAPIView):
     queryset = User.objects.all()
@@ -475,26 +466,98 @@ def payment_info(request):
     return render(request, 'payment_info.html', context)
 
 def add_address(request):
-    # Handle adding a new address
+    if request.method == 'POST':
+        street = request.POST.get('street')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        zip_code = request.POST.get('zip_code')
+
+        address = Address(user=request.user, street=street, city=city, state=state, zip_code=zip_code)
+        address.save()
+
+        messages.success(request, 'Address added successfully.')
+    else:
+        messages.error(request, 'Invalid request method.')
+
     return redirect('payment_info')
 
 def add_credit_card(request):
-    # Handle adding a new credit card
+    if request.method == 'POST':
+        card_number = request.POST.get('card_number')
+        expiration_date = request.POST.get('expiration_date')
+        cvv = request.POST.get('cvv')
+
+        credit_card = CreditCard(user=request.user, card_number=card_number, expiration_date=expiration_date, cvv=cvv)
+        credit_card.save()
+
+        messages.success(request, 'Credit card added successfully.')
+    else:
+        messages.error(request, 'Invalid request method.')
+
     return redirect('payment_info')
 
 def update_address(request, address_id):
-    # Handle updating an existing address
+    if request.method == 'POST':
+        street = request.POST.get('street')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        zip_code = request.POST.get('zip_code')
+
+        address = get_object_or_404(Address, id=address_id, user=request.user)
+        address.street = street
+        address.city = city
+        address.state = state
+        address.zip_code = zip_code
+        address.save()
+
+        messages.success(request, 'Address updated successfully.')
+    else:
+        messages.error(request, 'Invalid request method.')
+
     return redirect('payment_info')
 
 def delete_address(request, address_id):
-    # Handle deleting an existing address
+    if request.method == 'POST':
+        address = get_object_or_404(Address, id=address_id, user=request.user)
+        address.delete()
+
+        messages.success(request, 'Address deleted successfully.')
+    else:
+        messages.error(request, 'Invalid request method.')
+
     return redirect('payment_info')
 
 def update_credit_card(request, credit_card_id):
-    # Handle updating an existing credit card
-    return redirect('payment_info')
+    if request.method == 'POST':
+        card_number = request.POST.get('card_number')
+        expiration_date = request.POST.get('expiration_date')
+        cvv = request.POST.get('cvv')
 
+        try:
+            credit_card = CreditCard.objects.get(id=credit_card_id, user=request.user)
+            credit_card.card_number = card_number
+            credit_card.expiration_date = expiration_date
+            credit_card.cvv = cvv
+            credit_card.save()
+
+            messages.success(request, 'Credit card updated successfully.')
+        except CreditCard.DoesNotExist:
+            messages.error(request, 'Credit card not found.')
+        
+        return redirect('payment_info')
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=405)
+    
 def delete_credit_card(request, credit_card_id):
-    # Handle deleting an existing credit card
-    return redirect('payment_info')
+    if request.method == 'POST':
+        try:
+            credit_card = CreditCard.objects.get(id=credit_card_id, user=request.user)
+            credit_card.delete()
 
+            messages.success(request, 'Credit card deleted successfully.')
+        except CreditCard.DoesNotExist:
+            messages.error(request, 'Credit card not found.')
+        
+        return redirect('payment_info')
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=405)

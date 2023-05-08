@@ -15,10 +15,10 @@
 <body>
   <header>
     <nav>
-      <a href="index.html" class="logo">RealEstate</a>
+      <li><a href="{% url 'index' %}" >Home</a></li>
       <ul>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="logout.html">Log Out</a></li>
+        <li><a href="{% url 'dashboard' %}" >Dashboard</a></li>
+        <li><a href="{% url 'logout' %}" >Logout</a></li>
       </ul>
     </nav>
   </header>
@@ -31,14 +31,24 @@
         <!-- Agent -->
         <div class="agent-content">
           <!-- Add/modify/delete properties, view bookings -->
+          <a href="{% url 'property_search' %}">Add Property</a>
+          <a href="{% url 'property_list' %}">Manage Properties</a>
+          <a href="{% url 'manage_booking' %}">View Bookings</a>
         </div>
         <!-- Perspective Renter -->
         <div class="perspective-renter-content">
           <!-- Add/modify/delete addresses and payment methods, search for properties, book properties, manage bookings -->
+          <a href="{% url 'profile' %}">Add Address</a>
+          <a href="{% url 'profile' %}">Manage Addresses</a>
+          <a href="{% url 'payment_info' %}">Add Payment Method</a>
+          <a href="{% url 'payment_info' %}">Manage Payment Methods</a>
+          <a href="{% url 'property_search' %}">Search Properties</a>
+          <a href="{% url 'manage_bookings' %}">Manage Bookings</a>
         </div>
         <!-- User -->
         <div class="user-content">
           <!-- Explore available properties -->
+          <a href="{% url 'property_search' %}">Explore Properties</a>
         </div>
       </div>
     </section>
@@ -46,6 +56,6 @@
   <footer>
     <p>&copy; 2023 RealEstate. All Rights Reserved.</p>
   </footer>
-  <script src="scripts.js"></script>
+
 </body>
 </html>

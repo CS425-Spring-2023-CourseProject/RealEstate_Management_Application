@@ -12,10 +12,10 @@
   <header>
     <nav>
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="property_search.html">Search Properties</a></li>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="logout.html">Logout</a></li>
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'property_search' %}">Search Properties</a></li>
+        <li><a href="{% url 'dashboard' %}" >Dashboard</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
       </ul>
     </nav>
   </header>
@@ -55,7 +55,5 @@
   <footer>
     <p>&copy; 2023 - My Real Estate Application</p>
   </footer>
-
-  <script src="scripts.js"></script>
 </body>
 </html>

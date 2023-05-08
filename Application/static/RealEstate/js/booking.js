@@ -13,7 +13,7 @@ document.getElementById('booking-form').addEventListener('submit', async functio
       property_id: propertyId,
     };
   
-    const response = await fetch('http://127.0.0.1:8000/api/bookings/', {
+    const response = await fetch('/api/bookings/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

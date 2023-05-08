@@ -26,13 +26,7 @@ urlpatterns = [
     path('signup_process/', views.signup_process, name='signup_process'),
 
     path("login_process", views.login_process, name="login_process"),
-    
-    path("dashboard/", views.dashboard, name="dashboard"),
-    
-    path("property_search/", views.property_search, name="property_search"),
 
-    path('property_list/', views.PropertyList.as_view(), name='property_list'),
-    
     path('property_details/<int:property_id>/', views.property_details, name='api_property_detail'),
     
     path("manage_bookings/", ManageBookingsView.as_view(), name="manage_bookings"),

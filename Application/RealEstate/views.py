@@ -66,6 +66,45 @@ def index(request):
     properties = Property.objects.all()
     return render(request, 'RealEstate/index.html', {'properties': properties})
 
+def dashboard(request):
+    return render(request, 'RealEstate/dashboard.html')
+
+def property_details(request):
+    return render(request, 'RealEstate/property_details.html')
+
+# payment info view
+def payment_info(request):
+    return render(request, 'RealEstate/payment_info.html')
+def profile(request):
+    return render(request, 'RealEstate/profile.html')
+
+# manage bookings view
+def manage_bookings(request):
+    return render(request, 'RealEstate/manage_bookings.html')
+
+# property list view
+def property_list(request):
+    return render(request, 'RealEstate/property_list.html')
+
+# property search view
+def property_search(request):
+    return render(request, 'RealEstate/property_search.html')
+
+# login view
+def login(request):
+    return render(request, 'RealEstate/login.html')
+
+# logout view
+def logout(request):
+    # Add logout logic here
+    return render(request, 'RealEstate/logout.html')
+
+def booking(request):
+    return render(request, 'RealEstate/booking.html')
+
+def signup(request):
+    return render(request, 'RealEstate/signup.html')
+
 def search_properties(request):
     query = request.GET.get('search', '')
     properties = Property.objects.filter(location__icontains=query) | Property.objects.filter(property_type__icontains=query)

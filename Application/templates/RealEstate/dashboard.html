@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Real Estate Application</title>
-  <link rel="stylesheet" media="screen" href="{% static 'RealEstate/css/dashboard.css' %}">
   <script>
     const userName = "{{ user.get_full_name }}";
     const userRole = "{{ user.profile.role }}"; // Assuming the user's role is stored in a 'profile' related model with a 'role' field
   </script>
-  <script async src="{% static 'RealEstate/js/dashboard.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'RealEstate/css/dashboard.css' %}">
+  <script src="{% static 'RealEstate/js/dashboard.js' %}"></script>
 </head>
 <body>
   <header>

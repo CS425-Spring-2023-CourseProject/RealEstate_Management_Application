@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Property Search - Real Estate Application</title>
-  <link rel="stylesheet" media="screen" href="css/property_search.css">
-  <script async src="js/property_search.js"></script>
+  <link rel="stylesheet" href="{% static 'RealEstate/css/property_search.css' %}">
+  <script src="{% static 'RealEstate/js/property_search.js' %}"></script>
+  
 </head>
 <body>
   <header>

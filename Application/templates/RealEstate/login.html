@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Log In - Real Estate Application</title>
-  <link rel="stylesheet" media="screen" href="css/login.css">
-  <script async src="js/login.js"></script>
+  <link rel="stylesheet" href="{% static 'RealEstate/css/login.css' %}">
+  <script src="{% static 'RealEstate/js/login.js' %}"></script>
+  
 </head>
 <body>
   <header>

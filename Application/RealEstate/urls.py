@@ -6,6 +6,17 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('booking/', views.booking, name='booking'),
+    path('signup/', views.signup, name='signup'),
+    path('property_details/', views.property_details, name='property_details'),
+    path('payment_info/', views.payment_info, name='payment_info'),
+    path('logout/', views.logout, name='logout'),
+    path('profile/', views.profile, name='profile'),
+    path('manage_bookings/', views.manage_bookings, name='manage_bookings'),
+    path('property_list/', views.property_list, name='property_list'),
+    path('property_search/', views.property_search, name='property_search'),
+    path('login/', views.login, name='login'),
     
     path('add_property/', views.add_property, name='add_property'),
     path('edit_property/<int:property_id>/', views.edit_property, name='edit_property'),

@@ -3,6 +3,7 @@
 <head>
   {% load static %}
   <meta charset="UTF-8">
+  <meta name="csrf-token" content="{% csrf_token %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Property Search - Real Estate Application</title>
   <link rel="stylesheet" href="{% static 'RealEstate/css/property_search.css' %}">
@@ -20,9 +21,10 @@
     </nav>
   </header>
   <main>
-    <section class="search-properties">
+    <section class="property-search">
       <h2>Search Properties</h2>
-      <form action="#" method="POST">
+      <form id="search-form" action="#" method="POST">
+        {% csrf_token %}
         <label for="location">Location:</label>
         <input type="text" id="location" name="location" required>
 

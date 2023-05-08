@@ -1,68 +1,58 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const searchForm = document.querySelector(".search-properties form");
-  
-    searchForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-  
-      const location = document.getElementById("location").value;
-      const date = document.getElementById("date").value;
-      const propertyType = document.getElementById("property-type").value;
-      const priceRange = document.getElementById("price-range").value;
-  
-      const searchParams = {
-        location,
-        date,
-        property_type: propertyType,
-        price_range: priceRange,
-      };
-  
-      const response = await fetch("/property_search/", {
-        method: "POST",
-        body: JSON.stringify(searchParams),
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": getCookie("csrftoken"),
-        },
-      });
-  
-      const properties = await response.json();
-      displayProperties(properties);
+document.addEventListener("DOMContentLoaded", function () {
+  const searchForm = document.getElementById("search-form");
+  const searchResults = document.getElementById("search-results");
+
+  searchForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const location = document.getElementById("location").value;
+    const date = document.getElementById("date").value;
+    const property_type = document.getElementById("property_type").value;
+    const price_range = document.getElementById("price_range").value;
+
+    const response = await fetch("/property_search/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+      body: JSON.stringify({
+        location: location,
+        date: date,
+        property_type: property_type,
+        price_range: price_range,
+      }),
     });
-  
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== "") {
-        const cookies = document.cookie.split(";");
-        for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.substring(0, name.length + 1) === name + "=") {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
-      }
-      return cookieValue;
-    }
-  
-    function displayProperties(properties) {
-      const propertyResults = document.querySelector(".property-results");
-      propertyResults.innerHTML = "";
-  
-      if (properties.length === 0) {
-        const noResultsMessage = document.createElement("p");
-        noResultsMessage.textContent = "No properties found.";
-        propertyResults.appendChild(noResultsMessage);
-      } else {
-        properties.forEach((property) => {
-          const propertyElement = document.createElement("div");
-          propertyElement.classList.add("property");
-  
-          // Display property details
-          // Example: propertyElement.innerHTML = `<h3>${property.fields.address}</h3>`;
-  
-          propertyResults.appendChild(propertyElement);
-        });
-      }
-    }
+
+    const properties = await response.json();
+    displayProperties(properties);
   });
+
+  function displayProperties(properties) {
+    searchResults.innerHTML = "";
+
+    if (properties.length === 0) {
+      searchResults.innerHTML = "<p>No properties found.</p>";
+      return;
+    }
+
+    properties.forEach((property) => {
+      const propertyElement = document.createElement("div");
+      propertyElement.className = "property";
+      propertyElement.innerHTML = `
+          <h3>${property.fields.address}</h3>
+          <p>Property type: ${property.fields.property_type}</p>
+          <p>Price: ${property.fields.price}</p>
+          <p>Date available: ${property.fields.date_available}</p>
+      `;
+      searchResults.appendChild(propertyElement);
+    });
+  }
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  }
   
+});

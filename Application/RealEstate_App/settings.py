@@ -78,14 +78,13 @@ WSGI_APPLICATION = "RealEstate_App.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Real Estate Management App',
+        'NAME': 'RealEstateManagementApp',
         'USER': 'mitc',
         'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

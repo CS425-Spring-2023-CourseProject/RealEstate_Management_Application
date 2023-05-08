@@ -10,6 +10,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class PartialUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'phone_number')
+
+
 class AgentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Agent
@@ -23,6 +29,8 @@ class RewardProgramSerializer(serializers.ModelSerializer):
 
 
 class PerspectiveRenterSerializer(serializers.ModelSerializer):
+    pref_neighborhood = serializers.PrimaryKeyRelatedField(queryset=Neighborhood.objects.all(), allow_null=True)
+
     class Meta:
         model = PerspectiveRenter
         fields = '__all__'
@@ -32,6 +40,12 @@ class CreditCardSerializer(serializers.ModelSerializer):
     class Meta:
         model = CreditCard
         fields = '__all__'
+
+
+class UpdateCreditCardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CreditCard
+        fields = ('card_number', 'expiration_date', 'security_code')
 
 
 class AddressSerializer(serializers.ModelSerializer):

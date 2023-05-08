@@ -1,12 +1,28 @@
 from django.urls import path
 from . import views
-from .views import signup
+from .views import signup, ManageBookingsView
 
 urlpatterns = [
     path('signup_process/', signup, name='signup_process'),
     
     path("login_process", views.login_process, name="login_process"),
     
+    path("dashboard/", views.dashboard, name="dashboard"),
+    
+    path("property_search/", views.PropertySearch.as_view(), name="property_search"),
+
+    path('property_list/', views.PropertyList.as_view(), name='property_list'),
+    
+    path('property_details/<int:property_id>/', views.property_details, name='api_property_detail'),
+    
+    path("manage_bookings/", ManageBookingsView.as_view(), name="manage_bookings"),
+
+    path("bookings/<int:pk>/", views.BookingDetail.as_view(), name="booking_detail"),
+    
+    path('api/bookings/', views.api_bookings, name='api_bookings'),
+
+    path("create_booking/", views.create_booking, name="create_booking"),
+     
     path("users/", views.UserList.as_view(), name="user_list"),
     path("users/<str:pk>/", views.UserDetail.as_view(), name="user_detail"),
 
@@ -51,4 +67,23 @@ urlpatterns = [
 
     path("lands/", views.LandList.as_view(), name="land_list"),
     path("lands/<int:pk>/", views.LandDetail.as_view(), name="land_detail"),
+    
+    path('api/profile/personal_details/', views.UpdatePersonalDetailsView.as_view(), name='update_personal_details'),
+    path('api/profile/preferred_neighborhoods/', views.UpdatePreferredNeighborhoodsView.as_view(), name='update_preferred_neighborhoods'),
+    path('api/profile/credit_card/<int:id>/', views.UpdateCreditCardView.as_view(), name='update_credit_card'),
+    
+    path('profile/', views.profile, name='profile'),
+    
+    path('payment_info/', views.payment_info, name='payment_info'),
+    path('add_address/', views.add_address, name='add_address'),
+    path('add_credit_card/', views.add_credit_card, name='add_credit_card'),
+    path('update_address/<int:address_id>/', views.update_address, name='update_address'),
+    path('delete_address/<int:address_id>/', views.delete_address, name='delete_address'),
+    path('update_credit_card/<int:credit_card_id>/', views.update_credit_card, name='update_credit_card'),
+    path('delete_credit_card/<int:credit_card_id>/', views.delete_credit_card, name='delete_credit_card'),
+    
+    path('update_personal_details/', views.update_personal_details, name='update_personal_details'),
+    path('update_preferred_neighborhoods/', views.update_preferred_neighborhoods, name='update_preferred_neighborhoods'),
+    path('update_credit_card_information/', views.update_credit_card_information, name='update_credit_card_information'),
+
 ]

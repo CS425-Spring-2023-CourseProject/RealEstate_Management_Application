@@ -6,7 +6,7 @@ class User(AbstractUser):
     address = models.ForeignKey('Address', on_delete=models.SET_NULL, blank=True, null=True, related_name='+')
     groups = models.ManyToManyField('auth.Group', blank=True, related_name='custom_user_set')
     user_permissions = models.ManyToManyField('auth.Permission', blank=True, related_name='custom_user_set')
-
+    pref_neighborhood = models.ForeignKey('Neighborhood', on_delete=models.SET_NULL, blank=True, null=True, related_name='+')
 
 class Address(models.Model):
     line_1 = models.CharField(max_length=255)
@@ -39,6 +39,9 @@ class RewardProgram(models.Model):
 class CreditCard(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     payment_address = models.ForeignKey(Address, on_delete=models.SET_NULL, blank=True, null=True)
+    card_number = models.CharField(max_length=16)
+    expiration_date = models.DateField()
+    security_code = models.CharField(max_length=3)
 
 class Property(models.Model):
     TYPE_CHOICES = (

@@ -1,0 +1,42 @@
+-- Insert the missing address
+INSERT INTO addresses (address_id, email, line_1, line_2, city, state, zip_code, neighborhood_id) VALUES (3, NULL, '123 Commercial Ave', NULL, 'City C', 'CC', '34567', 3);
+
+-- Existing sample data
+
+-- Users
+INSERT INTO users (email, name, phone_number, address_id) VALUES ('john_doe@example.com', 'John Doe', '555-1234', 1);
+INSERT INTO users (email, name, phone_number, address_id) VALUES ('jane_doe@example.com', 'Jane Doe', '555-5678', 2);
+
+-- Addresses
+INSERT INTO addresses (address_id, email, line_1, line_2, city, state, zip_code, neighborhood_id) VALUES (1, 'john_doe@example.com', '123 Main St', 'Apt 4B', 'City A', 'AA', '12345', 1);
+INSERT INTO addresses (address_id, email, line_1, line_2, city, state, zip_code, neighborhood_id) VALUES (2, 'jane_doe@example.com', '456 Second St', NULL, 'City B', 'BB', '23456', 2);
+
+-- Neighborhoods
+INSERT INTO neighborhoods (neighborhood_id, crime_rate, nearby_schools) VALUES (1, 0.05, 'Elementary School A, High School A');
+INSERT INTO neighborhoods (neighborhood_id, crime_rate, nearby_schools) VALUES (2, 0.1, 'Elementary School B, Middle School B, High School B');
+INSERT INTO neighborhoods (neighborhood_id, crime_rate, nearby_schools) VALUES (3, 0.15, 'Elementary School C, High School C');
+
+-- Agents
+INSERT INTO agents (email, job_title, agency) VALUES ('john_doe@example.com', 'Real Estate Agent', 'Real Estate Agency A');
+
+-- Perspective Renters
+INSERT INTO perspective_renters (email, move_in_date, budget, pref_neighborhood_id) VALUES ('jane_doe@example.com', '2023-06-01', 1500.00, 1);
+
+-- Reward Program
+INSERT INTO reward_program (email, reward_points) VALUES ('john_doe@example.com', 100);
+
+-- Credit Cards
+INSERT INTO credit_cards (card_id, email, payment_address) VALUES (1, 'john_doe@example.com', 1);
+INSERT INTO credit_cards (card_id, email, payment_address) VALUES (2, 'jane_doe@example.com', 2);
+-- Properties
+INSERT INTO properties (property_id, type, description, city, state, address_id, availability, neighborhood_id, agent_email, square_footage) VALUES (1, 'House', '3 bedroom house', 'City A', 'AA', 1, true, 1, 'john_doe@example.com', 1500);
+INSERT INTO properties (property_id, type, description, city, state, address_id, availability, neighborhood_id, agent_email, square_footage) VALUES (2, 'Apartment', '2 bedroom apartment', 'City B', 'BB', 2, true, 2, 'john_doe@example.com', 900);
+INSERT INTO properties (property_id, type, description, city, state, address_id, availability, neighborhood_id, agent_email, square_footage) VALUES (3, 'Commercial', 'Commercial building', 'City C', 'CC', 3, true, 3, 'john_doe@example.com', 2000);
+
+-- Prices
+INSERT INTO prices (property_id, rental_price) VALUES (1, 1200.00);
+INSERT INTO prices (property_id, rental_price) VALUES (2, 800.00);
+INSERT INTO prices (property_id, rental_price) VALUES (3, 3000.00);
+
+-- Bookings
+INSERT INTO bookings (booking_id, email, property_id, start_date, end_date, card_id) VALUES (1, 'jane_doe@example.com', 1, '2023-06-01', '2023-06-30', 2);

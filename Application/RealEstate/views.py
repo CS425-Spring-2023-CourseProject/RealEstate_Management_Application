@@ -64,7 +64,7 @@ def add_property(request):
 
 def index(request):
     properties = Property.objects.all()
-    return render(request, 'index.html', {'properties': properties})
+    return render(request, 'RealEstate/index.html', {'properties': properties})
 
 def search_properties(request):
     query = request.GET.get('search', '')

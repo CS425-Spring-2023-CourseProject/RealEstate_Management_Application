@@ -1,0 +1,79 @@
+/* Reset some browser defaults */
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
+  
+  header {
+    background: #333;
+    padding: 1rem 0;
+  }
+  
+  header nav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+  }
+  
+  header nav ul li {
+    margin-right: 1rem;
+  }
+  
+  header nav ul li:last-child {
+    margin-right: 0;
+  }
+  
+  header nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.1rem;
+  }
+  
+  header nav ul li a:hover {
+    color: #ccc;
+  }
+  
+  main {
+    padding: 2rem 0;
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .payment-info h1 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .payment-info h2 {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+  }
+  
+  .payment-info form {
+    margin-bottom: 2rem;
+  }
+  
+  .payment-info form button {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  
+  .payment-info form button:hover {
+    background: #ccc;
+    color: #333;
+  }
+  
+  footer {
+    background: #333;
+    padding: 1rem 0;
+    text-align: center;
+    color: #fff;
+  }
+  

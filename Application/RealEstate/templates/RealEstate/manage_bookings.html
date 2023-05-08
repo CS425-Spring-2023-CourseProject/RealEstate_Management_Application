@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Bookings</title>
+  <link rel="stylesheet" media="screen" href="css/manage_bookings.css">
+  <script async src="js/manage_bookings.js"></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="property_search.html">Search Properties</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="manage-bookings">
+      <h1>Manage Bookings</h1>
+      
+      <table id="bookings-table">
+        <thead>
+          <tr>
+            <th>Booking ID</th>
+            <th>Property</th>
+            <th>Rental Period</th>
+            <th>Total Cost</th>
+            <th>Payment Method</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamically populate bookings for the user (renter/agent) -->
+          <script id="booking-row-template" type="text/template">
+            <tr>
+              <td>{{booking_id}}</td>
+              <td>{{property}}</td>
+              <td>{{rental_period}}</td>
+              <td>{{total_cost}}</td>
+              <td>{{payment_method}}</td>
+              <td>
+                <button class="cancel-booking" data-booking-id="{{booking_id}}">Cancel</button>
+              </td>
+            </tr>
+          </script>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2023 - My Real Estate Application</p>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

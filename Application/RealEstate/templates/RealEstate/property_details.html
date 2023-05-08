@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Details</title>
+  <link rel="stylesheet" media="screen" href="css/property_details.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="logo">RealEstate</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="property_search.html">Search Properties</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="property-details">
+      <h2>{{ property.property_type }} - {{ property.city }}, {{ property.state }}</h2>
+      <p>Price: ${{ property.price.rental_price }}</p>
+      <p>{{ property.description }}</p>
+      <p>Agent: {{ property.agent.user.first_name }} {{ property.agent.user.last_name }}</p>
+      <p>Agency: {{ property.agent.agency }}</p>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2023 - My Real Estate Application</p>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

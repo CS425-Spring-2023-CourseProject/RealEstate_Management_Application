@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" media="screen" href="css/profile.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="property_search.html">Search Properties</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="profile">
+      <h1>Your Profile</h1>
+
+      <!-- Personal Details -->
+      <h2>Personal Details</h2>
+      <form method="POST">
+        {% csrf_token %}
+        {% for field in personal_details_form %}
+          <div class="form-group">
+            <label>{{ field.label_tag }}</label>
+            {{ field }}
+            {% if field.errors %}
+              <div class="form-error">
+                {{ field.errors }}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <button type="submit">Update Personal Details</button>
+      </form>
+
+      <!-- Preferred Neighborhoods -->
+      <h2>Preferred Neighborhoods</h2>
+      <form method="POST">
+        {% csrf_token %}
+        {% for field in preferred_neighborhood_form %}
+          <div class="form-group">
+            <label>{{ field.label_tag }}</label>
+            {{ field }}
+            {% if field.errors %}
+              <div class="form-error">
+                {{ field.errors }}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <button type="submit">Update Preferred Neighborhoods</button>
+      </form>
+
+      <!-- Credit Card Information -->
+      <h2>Credit Card Information</h2>
+      <form method="POST">
+        {% csrf_token %}
+        {% for card_form in credit_card_forms %}
+          {% for field in card_form %}
+            <div class="form-group">
+              <label>{{ field.label_tag }}</label>
+              {{ field }}
+              {% if field.errors %}
+                <div class="form-error">
+                  {{ field.errors }}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% endfor %}
+        <button type="submit">Update Credit Card Information</button>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2023 - My Real Estate Application</p>
+  </footer>
+</body>
+</html>

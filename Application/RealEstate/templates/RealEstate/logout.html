@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logout</title>
+  <link rel="stylesheet" media="screen" href="css/logout.css">
+  <script async src="js/logout.js"></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'property_search' %}">Search Properties</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="logout" id="logout-section">
+      <h1>You have successfully logged out</h1>
+      <p><a href="{% url 'login' %}">Click here</a> to log in again.</p>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2023 - My Real Estate Application</p>
+  </footer>
+  <script src="{% static 'js/logout.js' %}"></script>
+  {% csrf_token %}
+</body>
+</html>

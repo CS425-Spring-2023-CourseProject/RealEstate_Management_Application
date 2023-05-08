@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking</title>
+  <link rel="stylesheet" media="screen" href="{% static 'RealEstate/css/booking.css' %}">
+  <script async src="{% static 'RealEstate/js/booking.js' %}"></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="property_search.html">Search Properties</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="booking">
+      <h1>Booking Property</h1>
+      
+      <form id="booking-form" action="{% url 'create_booking' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" id="property-id" value="{{ property_id }}">
+        <div>
+          <label for="start-date">Start Date:</label>
+          <input type="date" id="start-date" name="start_date" required>
+        </div>
+        <div>
+          <label for="end-date">End Date:</label>
+          <input type="date" id="end-date" name="end_date" required>
+        </div>
+        <div>
+          <label for="payment-method">Payment Method:</label>
+          <select id="payment-method" name="payment_method" required>
+            <option value="">Select a payment method</option>
+            <option value="visa">Visa ****1234</option>
+            <option value="mastercard">Mastercard ****5678</option>
+            <option value="amex">American Express ****9012</option>
+            <!-- Add more payment methods for the user -->
+          </select>
+        </div>
+        <button type="submit">Book Property</button>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2023 - My Real Estate Application</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,69 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+header {
+  background: #333;
+  padding: 1rem;
+}
+
+header nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+header nav ul li {
+  display: inline;
+}
+
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+  margin-right: 1rem;
+}
+
+header nav ul li a:hover {
+  color: #ccc;
+}
+
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.booking {
+  margin-top: 2rem;
+}
+
+.booking form {
+  display: flex;
+  flex-direction: column;
+}
+
+.booking form div {
+  margin-bottom: 1rem;
+}
+
+.booking button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 1rem;
+}
+
+.booking button:hover {
+  background-color: #555;
+}

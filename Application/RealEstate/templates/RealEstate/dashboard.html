@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Real Estate Application</title>
+  <link rel="stylesheet" media="screen" href="{% static 'RealEstate/css/dashboard.css' %}">
+  <script>
+    const userName = "{{ user.get_full_name }}";
+    const userRole = "{{ user.profile.role }}"; // Assuming the user's role is stored in a 'profile' related model with a 'role' field
+  </script>
+  <script async src="{% static 'RealEstate/js/dashboard.js' %}"></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="logo">RealEstate</a>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="logout.html">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="dashboard">
+      <h2>Welcome, [User Name]!</h2>
+      <div class="user-role">
+        <h3>[User Role]</h3>
+        <!-- Display content based on the user role -->
+        <!-- Agent -->
+        <div class="agent-content">
+          <!-- Add/modify/delete properties, view bookings -->
+        </div>
+        <!-- Perspective Renter -->
+        <div class="perspective-renter-content">
+          <!-- Add/modify/delete addresses and payment methods, search for properties, book properties, manage bookings -->
+        </div>
+        <!-- User -->
+        <div class="user-content">
+          <!-- Explore available properties -->
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2023 RealEstate. All Rights Reserved.</p>
+  </footer>
+  <script src="scripts.js"></script>
+</body>
+</html>

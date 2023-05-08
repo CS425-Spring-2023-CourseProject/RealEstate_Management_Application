@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property List - Real Estate Application</title>
+  <link rel="stylesheet" media="screen" href="css/property_list.css">
+  <script async src="js/property_list.js"></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="logo">RealEstate</a>
+      <ul class="nav-links">
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="logout.html">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="property-list">
+      <h2>Property List</h2>
+      <div class="sort-options">
+        <label for="sort-by">Sort by:</label>
+        <select id="sort-by" name="sort-by">
+          <option value="price">Price</option>
+          <option value="bedrooms">Number of Bedrooms</option>
+        </select>
+      </div>
+      <ul class="property-results">
+        <!-- Display list of properties here -->
+      </ul>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2023 RealEstate. All Rights Reserved.</p>
+  </footer>
+  <script src="scripts.js"></script>
+</body>
+</html>

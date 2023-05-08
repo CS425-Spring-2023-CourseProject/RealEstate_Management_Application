@@ -18,7 +18,76 @@ from .models import Property, Address, Booking, User, PerspectiveRenter, CreditC
 from .serializers import (PartialUserSerializer, PerspectiveRenterSerializer,
                           UpdateCreditCardSerializer)
 from .models import User, Neighborhood, CreditCard
+from .forms import CustomUserCreationForm
+from django.contrib.auth.decorators import login_required
+from .forms import AddPropertyForm
+from .forms import AddPropertyForm, EditPropertyForm, BookPropertyForm
 
+def edit_property(request, property_id):
+    property = get_object_or_404(Property, id=property_id)
+    if request.method == 'POST':
+        form = EditPropertyForm(request.POST, instance=property)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = EditPropertyForm(instance=property)
+    return render(request, 'edit_property.html', {'form': form})
+
+def delete_property(request, property_id):
+    property = get_object_or_404(Property, id=property_id)
+    property.delete()
+    return redirect('index')
+
+def book_property(request, property_id):
+    property = get_object_or_404(Property, id=property_id)
+    if request.method == 'POST':
+        form = BookPropertyForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.property = property
+            booking.save()
+            return redirect('index')
+    else:
+        form = BookPropertyForm()
+    return render(request, 'book_property.html', {'form': form, 'property': property})
+
+def add_property(request):
+    if request.method == 'POST':
+        form = AddPropertyForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = AddPropertyForm()
+    return render(request, 'add_property.html', {'form': form})
+
+def index(request):
+    properties = Property.objects.all()
+    return render(request, 'index.html', {'properties': properties})
+
+def search_properties(request):
+    query = request.GET.get('search', '')
+    properties = Property.objects.filter(location__icontains=query) | Property.objects.filter(property_type__icontains=query)
+    return render(request, 'index.html', {'properties': properties})
+
+def add_property(request):
+    # Handle form submission to add a property
+    pass
+
+
+def edit_property(request, property_id):
+    # Handle form submission to edit a property
+    pass
+
+
+def delete_property(request, property_id):
+    # Handle form submission to delete a property
+    pass
+
+def book_property(request):
+    # Handle form submission to book a property
+    pass
 
 def update_personal_details(request):
     if request.method == 'POST':
@@ -35,6 +104,11 @@ def update_preferred_neighborhoods(request):
             form.save()
             return redirect('profile')
     return redirect('profile')
+
+def property_list(request):
+    properties = Property.objects.all()
+    property_list = [property.to_dict() for property in properties]
+    return JsonResponse({'properties': property_list})
 
 def update_credit_card_information(request):
     if request.method == 'POST':
@@ -58,6 +132,16 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
 
+def signup_process(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors})
+
 def login_process(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -77,6 +161,21 @@ def login_process(request):
 def dashboard(request):
     return render(request, "dashboard.html", {"user": request.user})
 
+def property_search(request):
+    if request.method == 'POST':
+        # Parse search parameters from the request
+        search_params = json.loads(request.body)
+
+        # Perform the search using your models and the search parameters
+        # This is just an example, you need to implement the search logic based on your models
+        properties = Property.objects.filter(location=search_params['location'])
+
+        # Serialize the properties to JSON and return them in the response
+        properties_json = serializers.serialize('json', properties)
+        return JsonResponse(properties_json, safe=False)
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=405)
+    
 class PropertySearch(View):
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)

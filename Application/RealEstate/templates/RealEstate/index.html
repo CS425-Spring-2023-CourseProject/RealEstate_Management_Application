@@ -1,0 +1,137 @@
+<!-- templates/index.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Application</title>
+    <style>
+        /* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .property {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .property__info {
+    margin-bottom: 10px;
+  }
+  
+  .property__actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Real Estate Application</h1>
+    </header>
+
+    <section>
+        <h2>Search Properties</h2>
+        <form method="GET" action="{% url 'search_properties' %}">
+            <label for="search">Search by location or property type:</label>
+            <input type="text" id="search" name="search">
+            <button type="submit">Search</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Property Listings</h2>
+        <div id="property-list">
+            {% for property in properties %}
+                <div class="property-card">
+                    <h3>{{ property.name }}</h3>
+                    <p>{{ property.description }}</p>
+                    <p>Property Type: {{ property.property_type }}</p>
+                    <p>Location: {{ property.location }}</p>
+                    <p>Price: ${{ property.price }}</p>
+                    {% if user.is_authenticated and user.is_agent %}
+                        <a href="{% url 'edit_property' property.id %}">Edit</a>
+                        <a href="{% url 'delete_property' property.id %}">Delete</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            {% if user.is_authenticated and user.is_agent %}
+                <a href="{% url 'add_property' %}">Add Property</a>
+            {% endif %}
+        </div>
+    </section>
+
+    <section>
+        <h2>Book a Property</h2>
+        <form method="POST" action="{% url 'book_property' %}">
+            {% csrf_token %}
+            <label for="property-id">Property ID:</label>
+            <input type="text" id="property-id" name="property-id">
+
+            <label for="start-date">Start Date:</label>
+            <input type="date" id="start-date" name="start-date">
+
+            <label for="end-date">End Date:</label>
+            <input type="date" id="end-date" name="end-date">
+
+            <button type="submit">Book Property</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Real Estate Application. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

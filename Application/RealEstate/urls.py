@@ -1,15 +1,24 @@
 from django.urls import path
 from . import views
 from .views import signup, ManageBookingsView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('signup_process/', signup, name='signup_process'),
+    path('', views.index, name='index'),
     
+    path('add_property/', views.add_property, name='add_property'),
+    path('edit_property/<int:property_id>/', views.edit_property, name='edit_property'),
+    path('delete_property/<int:property_id>/', views.delete_property, name='delete_property'),
+    path('book_property/<int:property_id>/', views.book_property, name='book_property'),
+    
+    path('signup_process/', views.signup_process, name='signup_process'),
+
     path("login_process", views.login_process, name="login_process"),
     
     path("dashboard/", views.dashboard, name="dashboard"),
     
-    path("property_search/", views.PropertySearch.as_view(), name="property_search"),
+    path("property_search/", views.property_search, name="property_search"),
 
     path('property_list/', views.PropertyList.as_view(), name='property_list'),
     
@@ -87,3 +96,5 @@ urlpatterns = [
     path('update_credit_card_information/', views.update_credit_card_information, name='update_credit_card_information'),
 
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,6 +1,5 @@
 # Real Estate Management Application 🏠
 
-![Real Estate Management Application Banner
 *A comprehensive full-stack application designed to facilitate the management of real estate operations, from property listings to transactions.*
 
 ## Table of Contents 📜

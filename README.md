@@ -30,5 +30,9 @@
 - **Mitansh Chaudhari**
   - 🌐 [LinkedIn](https://linkedin.com/in/mit01)
   - 📧 [Email](mailto:mchaudhari1@hawk.iit.edu)
-  - Education: Bachelor of Science in Computer Science, Specialization in Distributed and Cloud Computing, Illinois Institute of Technology 
+  - Education: Bachelor of Science in Computer Science, Specialization in Distributed and Cloud Computing, Illinois Institute of Technology
+ 
+## License 📜
+
+This project is licensed under the terms of the MIT license.
 
